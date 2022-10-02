@@ -1,0 +1,36 @@
+{
+  "name": "time-time-workshop",
+  "private": true,
+  "version": "0.0.1",
+  "main": "./dist/time-time-workshop.cjs",
+  "module": "./dist/time-time-workshop.mjs",
+  "exports": {
+    ".": {
+      "require": "./dist/time-time-workshop.cjs",
+      "import": "./dist/time-time-workshop.mjs"
+    }
+  },
+  "scripts": {
+    "dev": "vite --host",
+    "format:scripts": "prettier . --write",
+    "format": "npm run format:scripts",
+    "build": "tsc && vite build && dts-bundle-generator --config ./dts-bundle-generator.config.ts",
+    "test": "jest --runInBand"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.1.1",
+    "@types/jsdom": "^20.0.0",
+    "@types/node": "^18.7.23",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "dts-bundle-generator": "^6.13.0",
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1",
+    "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.6.4",
+    "vite": "^3.1.0"
+  }
+}
