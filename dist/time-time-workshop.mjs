@@ -1,16 +1,13 @@
-var o = Object.defineProperty;
-var c = (a, t, e) => t in a ? o(a, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : a[t] = e;
-var r = (a, t, e) => (c(a, typeof t != "symbol" ? t + "" : t, e), e);
-class _ {
+class a {
+  _date;
+  _secondsDiv;
+  _minutesDiv;
+  _hoursDiv;
+  _circles;
+  _dataTic;
+  _wrapper;
+  _started;
   constructor() {
-    r(this, "_date");
-    r(this, "_secondsDiv");
-    r(this, "_minutesDiv");
-    r(this, "_hoursDiv");
-    r(this, "_circles");
-    r(this, "_dataTic");
-    r(this, "_wrapper");
-    r(this, "_started");
     this._started = !1, window.onload = () => this.setup();
   }
   setup() {
@@ -35,44 +32,41 @@ class _ {
     }, 1e3);
   }
   handleSecondAnimation() {
-    var i;
     if (!this._started)
       return;
-    const t = (i = this._date) == null ? void 0 : i.getSeconds();
+    const t = this._date?.getSeconds();
     if (!t || !this._dataTic)
       return;
     const e = this._dataTic * 5;
     if (t >= e - 5 && t <= e) {
-      const s = this.mapRange(t, e - 5, e, 0, 100);
-      this._secondsDiv && (this._secondsDiv.style.transform = `translateX(${s}%)`);
+      const i = this.mapRange(t, e - 5, e, 0, 100);
+      this._secondsDiv && (this._secondsDiv.style.transform = `translateX(${i}%)`);
     }
   }
   handleMinuteAnimation() {
-    var s, n, h, d;
     if (!this._started)
       return;
-    const t = (s = this._date) == null ? void 0 : s.getMinutes();
+    const t = this._date?.getMinutes();
     if (!t || !this._dataTic)
       return;
-    const e = this._dataTic * 5 + 5, i = (n = this._minutesDiv) == null ? void 0 : n.hasAttribute("hide");
-    t < e && t >= e ? i && ((h = this._minutesDiv) == null || h.removeAttribute("hide")) : i || (d = this._minutesDiv) == null || d.setAttribute("hide", "true");
+    const e = this._dataTic * 5 + 5, i = this._minutesDiv?.hasAttribute("hide");
+    t < e && t >= e ? i && this._minutesDiv?.removeAttribute("hide") : i || this._minutesDiv?.setAttribute("hide", "true");
   }
   handleHourAnimation() {
-    var s, n, h, d;
     if (!this._started)
       return;
-    let t = (s = this._date) == null ? void 0 : s.getHours();
+    let t = this._date?.getHours();
     if (!t || this._dataTic)
       return;
     t = this.makeHour12(t);
-    const e = this._dataTic, i = (n = this._hoursDiv) == null ? void 0 : n.hasAttribute("hide");
-    t == e ? i && ((h = this._hoursDiv) == null || h.removeAttribute("hide")) : i || (d = this._hoursDiv) == null || d.setAttribute("hide", "true");
+    const e = this._dataTic, i = this._hoursDiv?.hasAttribute("hide");
+    t == e ? i && this._hoursDiv?.removeAttribute("hide") : i || this._hoursDiv?.setAttribute("hide", "true");
   }
   makeHour12(t) {
     return t > 12 ? t - 12 : t;
   }
-  mapRange(t, e, i, s, n) {
-    return t = (t - e) / (i - e), s + t * (n - s);
+  mapRange(t, e, i, s, r) {
+    return t = (t - e) / (i - e), s + t * (r - s);
   }
   generateMinuteDiv() {
     if (!this._wrapper)
@@ -108,5 +102,5 @@ class _ {
   }
 }
 export {
-  _ as Tic
+  a as Tic
 };
