@@ -9,6 +9,8 @@
   "version": "0.0.1",
   "main": "./dist/time-time-workshop.cjs",
   "module": "./dist/time-time-workshop.mjs",
+  "unpkg": "./dist/time-time-workshop.mjs",
+  "jsdelivr": "./dist/time-time-workshop.mjs",
   "exports": {
     ".": {
       "require": "./dist/time-time-workshop.cjs",
