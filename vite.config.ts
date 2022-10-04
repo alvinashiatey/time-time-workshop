@@ -7,6 +7,14 @@ const getPackageName = () => {
     return packageJson.name;
 };
 
+const getPackageNameCamelCase = () => {
+    try {
+        return getPackageName().replace(/-./g, (char) => char[1].toUpperCase());
+    } catch (err) {
+        throw new Error("Name property in package.json is missing.");
+    }
+};
+
 const fileName: { [key: string]: string } = {
     es: `${getPackageName()}.mjs`,
     cjs: `${getPackageName()}.cjs`,
@@ -20,7 +28,7 @@ module.exports = defineConfig({
         target: "esnext",
         lib: {
             entry: path.resolve(__dirname, "src/index.ts"),
-            name: "Tic",
+            name: getPackageNameCamelCase(),
             formats: ["es", "cjs", "iife", "umd"],
             fileName: (format) => fileName[format],
         },

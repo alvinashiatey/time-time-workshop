@@ -1,5 +1,4 @@
 class a {
-  _date;
   _secondsDiv;
   _minutesDiv;
   _hoursDiv;
@@ -8,12 +7,16 @@ class a {
   _wrapper;
   _started;
   constructor() {
-    this._started = !1, window.onload = () => this.setup();
+    this._started = !1, this.setup();
   }
   setup() {
-    this._date = new Date(), this._secondsDiv = this.generateSecDiv(), this._minutesDiv = this.generateMinuteDiv(), this._hoursDiv = this.generateHourDiv(), this._wrapper = document.querySelector(".wrapper"), this._circles = [];
+    this._circles = [], this.setupDivs();
+  }
+  setupDivs() {
+    this._wrapper = document.querySelector(".wrapper"), this._secondsDiv = this.generateSecDiv(), this._minutesDiv = this.generateMinuteDiv(), this._hoursDiv = this.generateHourDiv();
   }
   start() {
+    console.log("\u{1F565}: Start");
     const t = document.body;
     if (!t.dataset.tic)
       return;
@@ -24,43 +27,41 @@ class a {
       const s = this.generateCircleDiv(e);
       s && this._circles && this._circles.push(s);
     }
-    this._started = !0, window.onload = () => this.animate();
+    this._started = !0, this.animate();
   }
   animate() {
-    setTimeout(() => {
-      this.handleSecondAnimation(), this.handleMinuteAnimation(), this.handleHourAnimation();
-    }, 1e3);
+    this.handleSecondAnimation(), this.handleMinuteAnimation(), this.handleHourAnimation(), setTimeout(() => this.animate(), 1e3);
   }
   handleSecondAnimation() {
     if (!this._started)
       return;
-    const t = this._date?.getSeconds();
-    if (!t || !this._dataTic)
+    const e = new Date()?.getSeconds();
+    if (!e || !this._dataTic)
       return;
-    const e = this._dataTic * 5;
-    if (t >= e - 5 && t <= e) {
-      const i = this.mapRange(t, e - 5, e, 0, 100);
-      this._secondsDiv && (this._secondsDiv.style.transform = `translateX(${i}%)`);
+    const i = this._dataTic * 5;
+    if (e >= i - 5 && e <= i) {
+      const s = this.mapRange(e, i - 5, i, 0, 100);
+      this._secondsDiv && (this._secondsDiv.style.transform = `translateX(${s}vw)`);
     }
   }
   handleMinuteAnimation() {
     if (!this._started)
       return;
-    const t = this._date?.getMinutes();
-    if (!t || !this._dataTic)
+    const e = new Date()?.getMinutes();
+    if (!e || !this._dataTic)
       return;
-    const e = this._dataTic * 5 + 5, i = this._minutesDiv?.hasAttribute("hide");
-    t < e && t >= e ? i && this._minutesDiv?.removeAttribute("hide") : i || this._minutesDiv?.setAttribute("hide", "true");
+    const i = e > 5 ? this._dataTic * 5 : 0, s = i === 60 ? i : i + 5, r = this._minutesDiv?.hasAttribute("hide");
+    e < s && e >= i ? r && this._minutesDiv?.removeAttribute("hide") : r || this._minutesDiv?.setAttribute("hide", "true");
   }
   handleHourAnimation() {
     if (!this._started)
       return;
-    let t = this._date?.getHours();
-    if (!t || this._dataTic)
+    let e = new Date()?.getHours();
+    if (!e || !this._dataTic)
       return;
-    t = this.makeHour12(t);
-    const e = this._dataTic, i = this._hoursDiv?.hasAttribute("hide");
-    t == e ? i && this._hoursDiv?.removeAttribute("hide") : i || this._hoursDiv?.setAttribute("hide", "true");
+    e = this.makeHour12(e);
+    const i = this._dataTic, s = this._hoursDiv?.hasAttribute("hide");
+    e === i ? s && this._hoursDiv?.removeAttribute("hide") : s || this._hoursDiv?.setAttribute("hide", "true");
   }
   makeHour12(t) {
     return t > 12 ? t - 12 : t;
@@ -71,8 +72,8 @@ class a {
   generateMinuteDiv() {
     if (!this._wrapper)
       return;
-    const t = this.generateDiv("second");
-    return this._wrapper.appendChild(t), t;
+    const t = this.generateDiv("minute");
+    return t.setAttribute("hide", "true"), this._wrapper.appendChild(t), t;
   }
   generateSecDiv() {
     if (!this._wrapper)
@@ -84,7 +85,7 @@ class a {
     if (!this._wrapper)
       return;
     const t = this.generateDiv("hour");
-    return this._wrapper.appendChild(t), t;
+    return t.setAttribute("hide", "true"), this._wrapper.appendChild(t), t;
   }
   generateCircleDiv(t) {
     const e = this.generateDiv("circle");
@@ -93,12 +94,6 @@ class a {
   generateDiv(t = void 0) {
     const e = document.createElement("div");
     return t && e.classList.add(t), e;
-  }
-  get date() {
-    return this._date;
-  }
-  set date(t) {
-    t === void 0 && (this._date = new Date()), this._date = t;
   }
 }
 export {

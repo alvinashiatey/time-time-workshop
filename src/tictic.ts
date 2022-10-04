@@ -1,5 +1,4 @@
 class Tic {
-  private _date: Date | undefined;
   private _secondsDiv: HTMLDivElement | undefined;
   private _minutesDiv: HTMLDivElement | undefined;
   private _hoursDiv: HTMLDivElement | undefined;
@@ -10,19 +9,23 @@ class Tic {
 
   constructor() {
     this._started = false;
-    window.onload = () => this.setup();
+    this.setup();
   }
 
   setup() {
-    this._date = new Date();
+    this._circles = [];
+    this.setupDivs();
+  }
+
+  setupDivs() {
+    this._wrapper = document.querySelector(".wrapper") as HTMLDivElement;
     this._secondsDiv = this.generateSecDiv();
     this._minutesDiv = this.generateMinuteDiv();
     this._hoursDiv = this.generateHourDiv();
-    this._wrapper = document.querySelector(".wrapper") as HTMLDivElement;
-    this._circles = [];
   }
 
   start() {
+    console.log("🕥: Start");
     const body = document.body;
     if (!body.dataset.tic) return;
     this._dataTic = +body.dataset.tic;
@@ -35,37 +38,39 @@ class Tic {
       }
     }
     this._started = true;
-    window.onload = () => this.animate();
+    this.animate();
   }
 
   private animate() {
-    setTimeout(() => {
-      this.handleSecondAnimation();
-      this.handleMinuteAnimation();
-      this.handleHourAnimation();
-    }, 1000);
+    this.handleSecondAnimation();
+    this.handleMinuteAnimation();
+    this.handleHourAnimation();
+    setTimeout(() => this.animate(), 1000);
   }
 
   private handleSecondAnimation() {
     if (!this._started) return;
-    const seconds = this._date?.getSeconds();
+    const date = new Date();
+    const seconds = date?.getSeconds();
     if (!seconds || !this._dataTic) return;
     const maxSec = this._dataTic * 5;
     if (seconds >= maxSec - 5 && seconds <= maxSec) {
       const val = this.mapRange(seconds, maxSec - 5, maxSec, 0, 100);
       if (this._secondsDiv) {
-        this._secondsDiv.style.transform = `translateX(${val}%)`;
+        this._secondsDiv.style.transform = `translateX(${val}vw)`;
       }
     }
   }
 
   private handleMinuteAnimation() {
     if (!this._started) return;
-    const minutes = this._date?.getMinutes();
+    const date = new Date();
+    const minutes = date?.getMinutes();
     if (!minutes || !this._dataTic) return;
-    const minuteVal = this._dataTic * 5 + 5;
+    const minuteVal = minutes > 5 ? this._dataTic * 5 : 0;
+    const mm = minuteVal === 60 ? minuteVal : minuteVal + 5;
     const isHidden = this._minutesDiv?.hasAttribute("hide");
-    if (minutes < minuteVal && minutes >= minuteVal) {
+    if (minutes < mm && minutes >= minuteVal) {
       isHidden ? this._minutesDiv?.removeAttribute("hide") : null;
     } else {
       !isHidden ? this._minutesDiv?.setAttribute("hide", "true") : null;
@@ -74,12 +79,13 @@ class Tic {
 
   private handleHourAnimation() {
     if (!this._started) return;
-    let hours = this._date?.getHours();
-    if (!hours || this._dataTic) return;
+    const date = new Date();
+    let hours = date?.getHours();
+    if (!hours || !this._dataTic) return;
     hours = this.makeHour12(hours);
     const hourVal = this._dataTic;
     const isHidden = this._hoursDiv?.hasAttribute("hide");
-    if (hours == hourVal) {
+    if (hours === hourVal) {
       isHidden ? this._hoursDiv?.removeAttribute("hide") : null;
     } else {
       !isHidden ? this._hoursDiv?.setAttribute("hide", "true") : null;
@@ -97,7 +103,8 @@ class Tic {
 
   private generateMinuteDiv(): HTMLDivElement | undefined {
     if (!this._wrapper) return;
-    const minDiv = this.generateDiv("second");
+    const minDiv = this.generateDiv("minute");
+    minDiv.setAttribute("hide", "true");
     this._wrapper.appendChild(minDiv);
     return minDiv;
   }
@@ -112,6 +119,7 @@ class Tic {
   private generateHourDiv(): HTMLDivElement | undefined {
     if (!this._wrapper) return;
     const hourDiv = this.generateDiv("hour");
+    hourDiv.setAttribute("hide", "true");
     this._wrapper.appendChild(hourDiv);
     return hourDiv;
   }
@@ -131,15 +139,6 @@ class Tic {
     if (!className) return el;
     el.classList.add(className);
     return el;
-  }
-
-  get date(): Date | undefined {
-    return this._date;
-  }
-
-  set date(value: Date | undefined) {
-    if (value === undefined) this._date = new Date();
-    this._date = value;
   }
 }
 
