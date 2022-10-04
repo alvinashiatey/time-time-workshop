@@ -1,16 +1,16 @@
 var o = Object.defineProperty;
 var c = (a, t, e) => t in a ? o(a, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : a[t] = e;
-var n = (a, t, e) => (c(a, typeof t != "symbol" ? t + "" : t, e), e);
-class u {
+var r = (a, t, e) => (c(a, typeof t != "symbol" ? t + "" : t, e), e);
+class _ {
   constructor() {
-    n(this, "_date");
-    n(this, "_secondsDiv");
-    n(this, "_minutesDiv");
-    n(this, "_hoursDiv");
-    n(this, "_circles");
-    n(this, "_dataTic");
-    n(this, "_wrapper");
-    n(this, "_started");
+    r(this, "_date");
+    r(this, "_secondsDiv");
+    r(this, "_minutesDiv");
+    r(this, "_hoursDiv");
+    r(this, "_circles");
+    r(this, "_dataTic");
+    r(this, "_wrapper");
+    r(this, "_started");
     this._started = !1, window.onload = () => this.setup();
   }
   setup() {
@@ -48,31 +48,31 @@ class u {
     }
   }
   handleMinuteAnimation() {
-    var s, r, h, d;
+    var s, n, h, d;
     if (!this._started)
       return;
     const t = (s = this._date) == null ? void 0 : s.getMinutes();
     if (!t || !this._dataTic)
       return;
-    const e = this._dataTic * 5 + 5, i = (r = this._minutesDiv) == null ? void 0 : r.hasAttribute("hide");
+    const e = this._dataTic * 5 + 5, i = (n = this._minutesDiv) == null ? void 0 : n.hasAttribute("hide");
     t < e && t >= e ? i && ((h = this._minutesDiv) == null || h.removeAttribute("hide")) : i || (d = this._minutesDiv) == null || d.setAttribute("hide", "true");
   }
   handleHourAnimation() {
-    var s, r, h, d;
+    var s, n, h, d;
     if (!this._started)
       return;
     let t = (s = this._date) == null ? void 0 : s.getHours();
     if (!t || this._dataTic)
       return;
     t = this.makeHour12(t);
-    const e = this._dataTic, i = (r = this._hoursDiv) == null ? void 0 : r.hasAttribute("hide");
+    const e = this._dataTic, i = (n = this._hoursDiv) == null ? void 0 : n.hasAttribute("hide");
     t == e ? i && ((h = this._hoursDiv) == null || h.removeAttribute("hide")) : i || (d = this._hoursDiv) == null || d.setAttribute("hide", "true");
   }
   makeHour12(t) {
     return t > 12 ? t - 12 : t;
   }
-  mapRange(t, e, i, s, r) {
-    return t = (t - e) / (i - e), s + t * (r - s);
+  mapRange(t, e, i, s, n) {
+    return t = (t - e) / (i - e), s + t * (n - s);
   }
   generateMinuteDiv() {
     if (!this._wrapper)
@@ -107,4 +107,6 @@ class u {
     t === void 0 && (this._date = new Date()), this._date = t;
   }
 }
-new u();
+export {
+  _ as Tic
+};

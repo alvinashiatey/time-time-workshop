@@ -143,4 +143,4 @@ class Tic {
   }
 }
 
-export const tic = new Tic();
+export { Tic };

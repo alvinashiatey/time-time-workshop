@@ -1,2 +1,2 @@
 import "./scss/style.scss";
-import "./tictic";
+export { Tic } from "./tictic";
