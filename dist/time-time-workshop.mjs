@@ -107,7 +107,4 @@ class u {
     t === void 0 && (this._date = new Date()), this._date = t;
   }
 }
-const l = new u();
-export {
-  l as tic
-};
+new u();
