@@ -19,6 +19,7 @@ const fileName: { [key: string]: string } = {
     es: `${getPackageName()}.mjs`,
     cjs: `${getPackageName()}.cjs`,
     iife: `${getPackageName()}.iife.js`,
+    umd: `${getPackageName()}.umd.js`
 };
 
 module.exports = defineConfig({
@@ -27,7 +28,7 @@ module.exports = defineConfig({
         lib: {
             entry: path.resolve(__dirname, "src/index.ts"),
             name: getPackageNameCamelCase(),
-            formats: ["es", "cjs", "iife"],
+            formats: ["es", "cjs", "iife", "umd"],
             fileName: (format) => fileName[format],
         },
     },
