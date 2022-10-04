@@ -125,12 +125,3 @@ body {
     }
   }
 }
-
-@media screen and (min-width: 50em) {
-  .wrapper {
-    height: 100vh;
-  }
-  .circle {
-    --circleW: 20vmin;
-  }
-}
