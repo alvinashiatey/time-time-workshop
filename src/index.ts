@@ -1,5 +1,5 @@
 import "./scss/style.scss";
-export class Tic {
+class Tic {
   private _date: Date | undefined;
   private _secondsDiv: HTMLDivElement | undefined;
   private _minutesDiv: HTMLDivElement | undefined;
@@ -143,3 +143,5 @@ export class Tic {
     this._date = value;
   }
 }
+
+export default Tic;
