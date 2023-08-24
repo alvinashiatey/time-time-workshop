@@ -59,6 +59,8 @@ class Tic {
       if (this._secondsDiv) {
         this._secondsDiv.style.transform = `translateX(${val}vw)`;
       }
+    } else {
+      this._secondsDiv?.style.removeProperty("transform");
     }
   }
 
@@ -71,8 +73,10 @@ class Tic {
     const mm = minuteVal === 60 ? minuteVal : minuteVal + 5;
     const isHidden = this._minutesDiv?.hasAttribute("hide");
     if (minutes < mm && minutes >= minuteVal) {
+      console.log("🕥: handleMinuteAnimation -> minutes", minutes);
       isHidden ? this._minutesDiv?.removeAttribute("hide") : null;
     } else {
+      console.log("🕥: handleMinuteAnimation -> minutes off", minutes);
       !isHidden ? this._minutesDiv?.setAttribute("hide", "true") : null;
     }
   }

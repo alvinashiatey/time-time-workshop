@@ -42,7 +42,8 @@ class a {
     if (e >= i - 5 && e <= i) {
       const s = this.mapRange(e, i - 5, i, 0, 100);
       this._secondsDiv && (this._secondsDiv.style.transform = `translateX(${s}vw)`);
-    }
+    } else
+      this._secondsDiv?.style.removeProperty("transform");
   }
   handleMinuteAnimation() {
     if (!this._started)
@@ -50,8 +51,8 @@ class a {
     const e = new Date()?.getMinutes();
     if (!e || !this._dataTic)
       return;
-    const i = e > 5 ? this._dataTic * 5 : 0, s = i === 60 ? i : i + 5, r = this._minutesDiv?.hasAttribute("hide");
-    e < s && e >= i ? r && this._minutesDiv?.removeAttribute("hide") : r || this._minutesDiv?.setAttribute("hide", "true");
+    const i = e > 5 ? this._dataTic * 5 : 0, s = i === 60 ? i : i + 5, n = this._minutesDiv?.hasAttribute("hide");
+    e < s && e >= i ? (console.log("\u{1F565}: handleMinuteAnimation -> minutes", e), n && this._minutesDiv?.removeAttribute("hide")) : (console.log("\u{1F565}: handleMinuteAnimation -> minutes off", e), n || this._minutesDiv?.setAttribute("hide", "true"));
   }
   handleHourAnimation() {
     if (!this._started)
@@ -66,8 +67,8 @@ class a {
   makeHour12(t) {
     return t > 12 ? t - 12 : t;
   }
-  mapRange(t, e, i, s, r) {
-    return t = (t - e) / (i - e), s + t * (r - s);
+  mapRange(t, e, i, s, n) {
+    return t = (t - e) / (i - e), s + t * (n - s);
   }
   generateMinuteDiv() {
     if (!this._wrapper)

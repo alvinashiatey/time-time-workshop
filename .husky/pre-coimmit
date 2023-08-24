@@ -1,5 +1,7 @@
 #!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+. "$(dirname "$0")/_/husky.sh" 
+
+find ./ -type f -name "._*" -delete
 
 npx lint-staged
 npx lint-staged

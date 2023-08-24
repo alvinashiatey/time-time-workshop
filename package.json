@@ -6,7 +6,7 @@
     "url": "https://www.alvinashiatey.com"
   },
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./dist/time-time-workshop.cjs",
   "module": "./dist/time-time-workshop.mjs",
   "unpkg": "./dist/time-time-workshop.umd.js",
